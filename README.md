@@ -18,7 +18,7 @@ implementation("com.github.hristogochev:tray-gtk:0.1.0")
 
 ### Notes
 
-* Only works with GTK3 and will not work with GTK2.
+* Only works with GTK-3 and will not work with GTK-2.
 * An internal reference to all created tray icons is kept at all times in order to avoid garbage collection of GTK structs.
 
 
