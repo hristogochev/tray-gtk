@@ -32,10 +32,17 @@ if (!loadGtk()) return
 startGtkDispatcher()
 
 trayIcon(
-    imagePath = "/path/to/tray/icon/image", visible = true, title = "GTK Tray Icon", tooltip = "GTK Tray Icon"
+    imagePath = "/path/to/tray/icon/image",
+    visible = true,
+    title = "GTK Tray Icon",
+    tooltip = "GTK Tray Icon"
 ) {
     menu {
-        item(text = "GTK Tray", enabled = false, imagePath = "/path/to/tray/menu/image")
+        item(
+            text = "GTK Tray",
+            enabled = false,
+            imagePath = "/path/to/tray/menu/image"
+        )
         separator()
         item(text = "Click me!") {
             action {
