@@ -5,15 +5,15 @@ import com.hristogochev.tray.gtk.jna.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
 import com.hristogochev.tray.gtk.jna.TRUE
 import com.hristogochev.tray.gtk.jna.structs.GCallback
+import com.hristogochev.tray.gtk.util.toPixBufPointer
+import com.sun.jna.Memory
 import com.sun.jna.Pointer
-
+import java.awt.image.BufferedImage
 
 /**
  * Native GTK tray item
  */
 class Item : MenuEntry() {
-
-    private var image: Pointer? = null
 
     var onClick: () -> Unit = {}
 
@@ -38,7 +38,19 @@ class Item : MenuEntry() {
             setGtkImage(value)
         }
 
-    private lateinit var callback: GCallback
+    var image: BufferedImage? = null
+        set(value) {
+            field = value
+            setGtkImage(value)
+        }
+
+
+    private var callback: GCallback? = null
+
+    private var imagePointer: Pointer? = null
+
+    private var imagePixBuf: Pair<Memory, Pointer>? = null
+
 
     init {
         Gtk3Dispatcher.dispatchAndWait {
@@ -73,11 +85,26 @@ class Item : MenuEntry() {
 
     private fun setGtkImage(imagePath: String?) {
         Gtk3Dispatcher.dispatch {
-            if (image != null) Gtk3.gtk_container_remove(pointer, image)
+            if (imagePointer != null) Gtk3.gtk_container_remove(pointer, imagePointer)
 
-            image = if (imagePath != null) Gtk3.gtk_image_new_from_file(imagePath) else null
+            imagePointer = if (imagePath != null) Gtk3.gtk_image_new_from_file(imagePath) else null
 
-            if (image != null) Gtk3.gtk_image_menu_item_set_image(pointer, image)
+            if (imagePointer != null) Gtk3.gtk_image_menu_item_set_image(pointer, imagePointer)
+
+            Gtk3.gtk_image_menu_item_set_always_show_image(pointer, true)
+        }
+    }
+
+    private fun setGtkImage(image: BufferedImage?) {
+        Gtk3Dispatcher.dispatch {
+            if (imagePointer != null) Gtk3.gtk_container_remove(pointer, imagePointer)
+
+            imagePointer = if (image != null) {
+                imagePixBuf = image.toPixBufPointer()
+                Gtk3.gtk_image_new_from_pixbuf(imagePixBuf?.second)
+            } else null
+
+            if (imagePointer != null) Gtk3.gtk_image_menu_item_set_image(pointer, imagePointer)
 
             Gtk3.gtk_image_menu_item_set_always_show_image(pointer, true)
         }
@@ -91,12 +118,12 @@ class Item : MenuEntry() {
     }
 
     override fun destroy() {
-        super.destroy()
         Gtk3Dispatcher.dispatchAndWait {
-            if (image != null) {
-                Gtk3.gtk_container_remove(pointer, image)
-                image = null
-            }
+            if (imagePointer != null) Gtk3.gtk_container_remove(pointer, imagePointer)
+            imagePixBuf = null
+            imagePointer = null
+            callback = null
+            super.destroy()
         }
     }
 }

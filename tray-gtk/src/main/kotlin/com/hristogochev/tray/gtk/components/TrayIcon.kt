@@ -1,22 +1,24 @@
-@file:Suppress("unused")
-
 package com.hristogochev.tray.gtk.components
 
 import com.hristogochev.tray.gtk.jna.GObject
 import com.hristogochev.tray.gtk.jna.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
-import com.sun.jna.Pointer
 import com.hristogochev.tray.gtk.jna.structs.GEventCallback
 import com.hristogochev.tray.gtk.jna.structs.GdkEventButton
+import com.hristogochev.tray.gtk.util.toPixBufPointer
+import com.sun.jna.Memory
+import com.sun.jna.Pointer
+import java.awt.image.BufferedImage
 
 
 /**
  * Native GTK tray icon
  */
 class TrayIcon {
-    @Volatile
     private var pointer: Pointer? = null
     private var callback: GEventCallback? = null
+    private var imagePixBuf: Pair<Memory, Pointer>? = null
+
 
     var title: String? = null
         set(value) {
@@ -26,7 +28,12 @@ class TrayIcon {
     var imagePath: String? = null
         set(value) {
             field = value
-            setGtkImagePath(value)
+            setGtkImageFromPath(value)
+        }
+    var image: BufferedImage? = null
+        set(value) {
+            field = value
+            setGtkImage(value)
         }
     var visible: Boolean = false
         set(value) {
@@ -69,7 +76,14 @@ class TrayIcon {
         }
     }
 
-    private fun setGtkImagePath(imagePath: String?) {
+    private fun setGtkImage(image: BufferedImage?) {
+        Gtk3Dispatcher.dispatch {
+            imagePixBuf = image?.toPixBufPointer()
+            Gtk3.gtk_status_icon_set_from_pixbuf(pointer, imagePixBuf?.second)
+        }
+    }
+
+    private fun setGtkImageFromPath(imagePath: String?) {
         Gtk3Dispatcher.dispatch {
             Gtk3.gtk_status_icon_set_from_file(pointer, imagePath)
         }
@@ -89,10 +103,11 @@ class TrayIcon {
 
     fun destroy() {
         menu?.destroy()
+        callback = null
         Gtk3.gtk_status_icon_set_visible(pointer, false)
+        imagePixBuf = null
         GObject.g_object_unref(pointer)
         pointer = null
-        callback = null
     }
 }
 

@@ -1,11 +1,15 @@
 import com.hristogochev.tray.gtk.*
 import com.hristogochev.tray.gtk.components.TrayIcon
+import java.awt.image.BufferedImage
 import java.net.URI
+import java.net.URL
+import javax.imageio.ImageIO
 import kotlin.system.exitProcess
 
+
 class ExampleTray {
-    private lateinit var trayIconImagePath: String
-    private lateinit var trayMenuImagePath: String
+    private lateinit var trayIconImage: BufferedImage
+    private lateinit var trayMenuImageURI:URI
     private lateinit var trayIcon: TrayIcon
 
     init {
@@ -14,22 +18,19 @@ class ExampleTray {
     }
 
     private fun setupImages() {
-        val trayIconImageResource = javaClass.getResource("/tray_icon.png")?.toExternalForm() ?: return
-        val trayMenuImageResource =
-            javaClass.getResource("/tray_menu.png")?.toExternalForm() ?: return
-        trayIconImagePath = URI(trayIconImageResource).path
-        trayMenuImagePath = URI(trayMenuImageResource).path
+        val trayIconImageURL = javaClass.getResource("/tray_icon.png")?.toExternalForm()?.toURL() ?: return
+        trayMenuImageURI = javaClass.getResource("/tray_menu.png")?.toExternalForm()?.toURI() ?: return
+        trayIconImage = ImageIO.read(trayIconImageURL)
     }
 
     private fun setupTray() {
         trayIcon = trayIcon(
-            imagePath = trayIconImagePath,
-            visible = true,
+            image = trayIconImage,
             title = "GTK Tray Icon",
             tooltip = "GTK Tray Icon"
         ) {
             menu {
-                item(text = "GTK Tray", enabled = false, imagePath = trayMenuImagePath)
+                item(text = "GTK Tray", enabled = false, imagePath=trayMenuImageURI.path)
                 separator()
                 item(text = "Click me!") {
                     action {
@@ -62,4 +63,7 @@ class ExampleTray {
             }
         }
     }
+
+    private fun String.toURI(): URI = URI(this)
+    private fun String.toURL(): URL = this.toURI().toURL()
 }

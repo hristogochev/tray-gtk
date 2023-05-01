@@ -2,11 +2,11 @@
 
 package com.hristogochev.tray.gtk.jna
 
-import com.sun.jna.Function
-import com.sun.jna.Pointer
 import com.hristogochev.tray.gtk.jna.structs.FuncCallback
 import com.hristogochev.tray.gtk.jna.structs.GMainContext
 import com.hristogochev.tray.gtk.jna.structs.GMainLoop
+import com.sun.jna.Function
+import com.sun.jna.Pointer
 
 
 internal object Gtk3 {
@@ -15,15 +15,12 @@ internal object Gtk3 {
 
         gtk_status_icon_position_menu = library.getFunction("gtk_status_icon_position_menu")
 
-        gtk_main_level = library.getFunction("gtk_main_level")
-
         true
     }.onFailure {
         System.err.println("Failed to bind to GTK3: $it")
     }.getOrElse { false }
 
     lateinit var gtk_status_icon_position_menu: Function
-    lateinit var gtk_main_level: Function
 
     external fun gtk_init_check(argc: Int): Boolean
     external fun g_main_loop_new(context: Pointer?, is_running: Boolean): GMainLoop?
@@ -41,6 +38,7 @@ internal object Gtk3 {
     external fun gtk_image_menu_item_set_image(image_menu_item: Pointer?, image: Pointer?)
     external fun gtk_image_menu_item_set_always_show_image(menu_item: Pointer?, forceShow: Boolean)
     external fun gtk_status_icon_new(): Pointer?
+    external fun gtk_status_icon_set_from_pixbuf(widget: Pointer?, pixbuf: Pointer?)
     external fun gtk_status_icon_set_from_file(widget: Pointer?, label: String?)
     external fun gtk_status_icon_set_visible(widget: Pointer?, visible: Boolean)
     external fun gtk_status_icon_set_tooltip_text(widget: Pointer?, tooltipText: String?)
@@ -65,5 +63,7 @@ internal object Gtk3 {
     external fun gtk_container_remove(parentWidget: Pointer?, widget: Pointer?)
     external fun gtk_widget_destroy(widget: Pointer?)
     external fun gtk_widget_set_tooltip_text(widget: Pointer?, text: String?)
+    external fun gtk_image_new_from_pixbuf(pixbuf: Pointer?): Pointer?
+
 }
 

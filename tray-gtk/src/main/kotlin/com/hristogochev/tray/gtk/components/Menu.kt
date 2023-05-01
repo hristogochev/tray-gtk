@@ -6,7 +6,6 @@ import com.hristogochev.tray.gtk.jna.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
 
 
-
 /**
  * Native GTK tray menu
  */
@@ -14,7 +13,7 @@ class Menu {
 
     private val attachedEntries = mutableListOf<MenuEntry>()
 
-     var menuPointer: Pointer? = null
+    var menuPointer: Pointer? = null
 
     init {
         Gtk3Dispatcher.dispatchAndWait {
@@ -36,14 +35,15 @@ class Menu {
         }
     }
 
-    fun destroy(){
+    fun destroy() {
         Gtk3Dispatcher.dispatchAndWait {
-            GObject.g_object_force_floating(menuPointer)
             for (entry in attachedEntries) {
-                entry.destroy()
                 Gtk3.gtk_container_remove(menuPointer, entry.pointer)
+                entry.destroy()
             }
+            attachedEntries.clear()
             Gtk3.gtk_widget_destroy(menuPointer)
+            menuPointer = null
         }
     }
 }

@@ -45,7 +45,7 @@ class Checkbox : MenuEntry() {
         }
 
 
-    private lateinit var callback: GCallback
+    private var callback: GCallback?=null
     private var signalId: Long = 0
 
     init {
@@ -99,5 +99,10 @@ class Checkbox : MenuEntry() {
         onToggle = {
             action(checked)
         }
+    }
+
+    override fun destroy() {
+        callback=null
+        super.destroy()
     }
 }
