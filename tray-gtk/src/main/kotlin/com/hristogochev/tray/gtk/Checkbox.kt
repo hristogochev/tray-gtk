@@ -16,6 +16,7 @@ fun Menu.checkbox(
     checked: Boolean = false,
     enabled: Boolean = true,
     tooltip: String? = null,
+    onToggle: (Boolean) -> Unit={},
     op: Checkbox.() -> Unit = {}
 ): Checkbox {
     val checkbox = Checkbox().apply {
@@ -23,6 +24,7 @@ fun Menu.checkbox(
         this.checked = checked
         this.enabled = enabled
         this.tooltip = tooltip
+        this.onToggle = onToggle
     }
     return opcr(this, checkbox, op)
 }
@@ -35,6 +37,7 @@ fun SubMenu.checkbox(
     checked: Boolean = false,
     enabled: Boolean = true,
     tooltip: String? = null,
+    onToggle: (Boolean) -> Unit={},
     op: Checkbox.() -> Unit = {}
 ): Checkbox {
     val checkbox = Checkbox().apply {
@@ -42,6 +45,7 @@ fun SubMenu.checkbox(
         this.checked = checked
         this.enabled = enabled
         this.tooltip = tooltip
+        this.onToggle = onToggle
     }
     return opcr(this, checkbox, op)
 }

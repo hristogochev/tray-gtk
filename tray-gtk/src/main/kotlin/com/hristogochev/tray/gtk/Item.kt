@@ -15,9 +15,10 @@ fun Menu.item(
     text: String? = null,
     enabled: Boolean = true,
     tooltip: String? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ) {
-    item(text, enabled, tooltip, imagePath = null, op)
+    item(text, enabled, tooltip, imagePath = null, onClick, op)
 }
 
 /**
@@ -28,13 +29,15 @@ fun Menu.item(
     enabled: Boolean = true,
     tooltip: String? = null,
     imagePath: String? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ): Item {
     val item = Item().apply {
         this.text = text
         this.enabled = enabled
-        this.imagePath = imagePath
         this.tooltip = tooltip
+        this.imagePath = imagePath
+        this.onClick = onClick
     }
     return opcr(this, item, op)
 }
@@ -47,13 +50,15 @@ fun Menu.item(
     enabled: Boolean = true,
     tooltip: String? = null,
     image: BufferedImage? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ): Item {
     val item = Item().apply {
         this.text = text
         this.enabled = enabled
-        this.image = image
         this.tooltip = tooltip
+        this.image = image
+        this.onClick = onClick
     }
     return opcr(this, item, op)
 }
@@ -65,9 +70,10 @@ fun SubMenu.item(
     text: String? = null,
     enabled: Boolean = true,
     tooltip: String? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ): Item {
-    return item(text, enabled, tooltip, imagePath = null, op)
+    return item(text, enabled, tooltip, imagePath = null, onClick, op)
 }
 
 /**
@@ -78,13 +84,15 @@ fun SubMenu.item(
     enabled: Boolean = true,
     tooltip: String? = null,
     imagePath: String? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ): Item {
     val item = Item().apply {
         this.text = text
         this.enabled = enabled
-        this.imagePath = imagePath
         this.tooltip = tooltip
+        this.imagePath = imagePath
+        this.onClick = onClick
     }
     return opcr(this, item, op)
 }
@@ -97,13 +105,15 @@ fun SubMenu.item(
     enabled: Boolean = true,
     tooltip: String? = null,
     image: BufferedImage? = null,
+    onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
 ): Item {
     val item = Item().apply {
         this.text = text
         this.enabled = enabled
-        this.image = image
         this.tooltip = tooltip
+        this.image = image
+        this.onClick = onClick
     }
     return opcr(this, item, op)
 }

@@ -12,13 +12,12 @@ import com.hristogochev.tray.gtk.jna.structs.GCallback
  */
 class Checkbox : MenuEntry() {
 
-    var onToggle: () -> Unit = {}
-        set(value) {
-            field = {
-                checked = !checked
-                value()
-            }
-        }
+    private var onClick: () -> Unit = {
+        checked = !checked
+        onToggle(checked)
+    }
+
+    var onToggle: (Boolean) -> Unit = {}
 
     var checked: Boolean = false
         set(value) {
@@ -45,7 +44,7 @@ class Checkbox : MenuEntry() {
         }
 
 
-    private var callback: GCallback?=null
+    private var callback: GCallback? = null
     private var signalId: Long = 0
 
     init {
@@ -54,7 +53,7 @@ class Checkbox : MenuEntry() {
 
             this.callback = object : GCallback {
                 override fun callback(instance: Pointer?, data: Pointer?): Int {
-                    Gtk3Dispatcher.proxyClick(onToggle)
+                    Gtk3Dispatcher.proxyClick(onClick)
                     return TRUE
                 }
             }
@@ -96,13 +95,11 @@ class Checkbox : MenuEntry() {
      * Sets an action that executes whenever the checkbox is toggled
      */
     fun action(action: (Boolean) -> Unit) {
-        onToggle = {
-            action(checked)
-        }
+        onToggle = action
     }
 
     override fun destroy() {
-        callback=null
+        callback = null
         super.destroy()
     }
 }
