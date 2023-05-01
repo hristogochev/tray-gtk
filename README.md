@@ -33,10 +33,6 @@ implementation("com.github.hristogochev:tray-gtk:master-SNAPSHOT")
 ![Preview](./preview.png)
 
 ```kotlin
-if (!loadGtk()) return
-
-startGtkDispatcher()
-
 trayIcon(
     imagePath = "/path/to/tray/icon/image",
     visible = true,
