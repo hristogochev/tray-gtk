@@ -1,6 +1,6 @@
 # tray-gtk
 
-Build GTK tray icons and menus in Kotlin with ease.</br>
+Build GTK tray icons in Kotlin with ease.</br>
 
 ### Usage
 
