@@ -17,9 +17,7 @@ fun Menu.item(
     tooltip: String? = null,
     onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
-) {
-    item(text, enabled, tooltip, imagePath = null, onClick, op)
-}
+) = item(text, enabled, tooltip, imagePath = null, onClick, op)
 
 /**
  * Creates a new menu item and attaches it to its parent
@@ -72,9 +70,7 @@ fun SubMenu.item(
     tooltip: String? = null,
     onClick: () -> Unit = {},
     op: Item.() -> Unit = {}
-): Item {
-    return item(text, enabled, tooltip, imagePath = null, onClick, op)
-}
+)= item(text, enabled, tooltip, imagePath = null, onClick, op)
 
 /**
  * Creates a new submenu item and attaches it to its parent

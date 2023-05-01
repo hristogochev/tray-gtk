@@ -15,9 +15,8 @@ fun Menu.submenu(
     enabled: Boolean = true,
     tooltip: String? = null,
     op: SubMenu.() -> Unit = {}
-): SubMenu {
-    return submenu(text, enabled, tooltip, imagePath = null, op)
-}
+) = submenu(text, enabled, tooltip, imagePath = null, op)
+
 
 /**
  * Creates a new menu submenu and attaches it to its parent
@@ -58,7 +57,6 @@ fun Menu.submenu(
 }
 
 
-
 /**
  * Creates a new submenu submenu and attaches it to its parent
  */
@@ -67,9 +65,8 @@ fun SubMenu.submenu(
     enabled: Boolean = true,
     tooltip: String? = null,
     op: SubMenu.() -> Unit = {}
-): SubMenu {
-    return submenu(text, enabled, tooltip, imagePath = null, op)
-}
+) = submenu(text, enabled, tooltip, imagePath = null, op)
+
 
 /**
  * Creates a new submenu submenu and attaches it to its parent
