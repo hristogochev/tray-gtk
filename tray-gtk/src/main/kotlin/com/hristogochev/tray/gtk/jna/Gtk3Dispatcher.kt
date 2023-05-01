@@ -1,9 +1,9 @@
 package com.hristogochev.tray.gtk.jna
 
-import com.sun.jna.Pointer
 import com.hristogochev.tray.gtk.jna.structs.FuncCallback
 import com.hristogochev.tray.gtk.jna.structs.GMainContext
 import com.hristogochev.tray.gtk.jna.structs.GMainLoop
+import com.sun.jna.Pointer
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -23,9 +23,12 @@ internal object Gtk3Dispatcher {
     private var running: Boolean = false
 
     @Synchronized
-    fun start() {
-        if (running) return
+    fun start() :Boolean{
+        if (running) return true
         running = true
+
+        val startupLatch = CountDownLatch(1)
+
         thread = object : Thread() {
             override fun run() {
                 val orig = Glib.g_log_set_default_handler(Glib.nullLogFunc, null)
@@ -36,7 +39,9 @@ internal object Gtk3Dispatcher {
                 mainLoop = Gtk3.g_main_loop_new(null, false)
                 mainContext = Gtk3.g_main_loop_get_context(mainLoop)
 
+                startupLatch.countDown()
                 Gtk3.g_main_loop_run(mainLoop)
+
                 if (orig != null) {
                     Glib.g_log_set_default_handler(orig, null)
                 }
@@ -46,6 +51,18 @@ internal object Gtk3Dispatcher {
             name = "GTK Native Event Loop"
         }
         thread.start()
+
+        return try {
+            if (!startupLatch.await(10, TimeUnit.SECONDS)) {
+                System.err.println("Error: Waited for startup took longer than expected")
+                false
+            } else {
+                true
+            }
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+            false
+        }
     }
 
 
@@ -76,6 +93,7 @@ internal object Gtk3Dispatcher {
     }
 
 
+    @Synchronized
     fun dispatchAndWait(timeoutSeconds: Long = 2, runnable: Runnable) {
         val isDispatch = currentlyDispatching.get()
         if (isDispatch) {
@@ -103,7 +121,7 @@ internal object Gtk3Dispatcher {
         }
     }
 
-
+    @Synchronized
     fun dispatch(runnable: Runnable) {
         if (currentlyDispatching.get()) {
             runnable.run()
@@ -133,6 +151,7 @@ internal object Gtk3Dispatcher {
     }
 
 
+    @Synchronized
     fun proxyClick(callback: () -> Unit) {
         currentlyDispatching.set(true)
         runCatching {

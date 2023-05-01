@@ -2,25 +2,23 @@
 
 package com.hristogochev.tray.gtk
 
-import com.hristogochev.tray.gtk.jna.*
-import com.hristogochev.tray.gtk.jna.GObject
-import com.hristogochev.tray.gtk.jna.Glib
-import com.hristogochev.tray.gtk.jna.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
+import com.hristogochev.tray.gtk.jna.GtkLoader
 
 /**
  * Loads all necessary GTK3 libraries
  */
 fun loadGtk(): Boolean {
-    return Glib.load() && GObject.load() && Gtk3.load() && GdkPixBuf.load()
+    return GtkLoader.load()
 }
 
 /**
  * Starts the GTK dispatcher if it's not already running
  */
-fun startGtkDispatcher() {
-    Gtk3Dispatcher.start()
+fun startGtkDispatcher(): Boolean {
+    if (!Gtk3Dispatcher.start()) return false
     Gtk3Dispatcher.waitAllDispatches()
+    return true
 }
 
 /**

@@ -1,12 +1,8 @@
-import com.hristogochev.tray.gtk.*
 import java.lang.ref.WeakReference
 
-lateinit var exampleTray: ExampleTray
 
 fun main() {
-    if (!loadGtk()) return
-    startGtkDispatcher()
-    exampleTray = ExampleTray()
+    val exampleTray = ExampleTray()
     // Check if garbage collection causes any issues
     gc()
 }

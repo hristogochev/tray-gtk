@@ -9,7 +9,7 @@ import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
 /**
  * Native GTK tray menu
  */
-class Menu {
+class Menu : BaseMenu {
 
     private val attachedEntries = mutableListOf<MenuEntry>()
 
@@ -21,7 +21,7 @@ class Menu {
         }
     }
 
-    fun attach(entry: MenuEntry) {
+    override fun attach(entry: MenuEntry) {
         attachedEntries.add(entry)
         Gtk3Dispatcher.dispatchAndWait {
             Gtk3.gtk_menu_shell_append(menuPointer, entry.pointer)

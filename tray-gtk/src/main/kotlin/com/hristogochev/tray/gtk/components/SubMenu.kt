@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage
 /**
  * Native GTK tray submenu
  */
-class SubMenu : MenuEntry() {
+class SubMenu : MenuEntry(), BaseMenu {
 
     private val attachedEntries = mutableListOf<MenuEntry>()
 
@@ -61,7 +61,7 @@ class SubMenu : MenuEntry() {
         }
     }
 
-    fun attach(entry: MenuEntry) {
+    override fun attach(entry: MenuEntry) {
         attachedEntries.add(entry)
         Gtk3Dispatcher.dispatchAndWait {
             Gtk3.gtk_menu_shell_append(menuPointer, entry.pointer)
