@@ -76,6 +76,14 @@ trayIcon(
 
 * Keeps an internal reference to all created tray icons in order to avoid garbage collection of GTK structs.
 
+### Building with ProGuard
+When building with ProGuard make sure to add these to your proguard-rules.pro file
+
+```
+-keep class com.sun.jna.** { *; }
+-keep class * implements com.sun.jna.** { *; }
+```
+
 ### License
 
 Licensed under [Apache-2.0 license](https://github.com/hristogochev/tray-gtk/blob/master/LICENSE).
