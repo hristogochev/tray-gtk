@@ -1,6 +1,6 @@
 # tray-gtk
 
-Easily build GTK-3 status icons with Kotlin.</br>
+Build GTK-3 status icons with Kotlin.</br>
 
 ### Usage
 
@@ -27,6 +27,10 @@ implementation("com.github.hristogochev:tray-gtk:master-SNAPSHOT")
 ![Preview](./preview.png)
 
 ```kotlin
+if (!loadGtk()) throw Exception("Unable to load a core gtk library!")
+
+if (!startGtkDispatcher()) throw Exception("Unable to start the gtk dispatcher!")
+
 trayIcon(
     imagePath = "/path/to/tray/icon/image",
     visible = true,
