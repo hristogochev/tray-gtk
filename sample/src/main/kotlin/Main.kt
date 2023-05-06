@@ -1,7 +1,11 @@
+import com.hristogochev.tray.gtk.loadGtk
+import com.hristogochev.tray.gtk.startGtkDispatcher
 import java.lang.ref.WeakReference
 
 
 fun main() {
+    if (!loadGtk()) throw Exception("Unable to load a core gtk library!")
+    if (!startGtkDispatcher()) throw Exception("Unable to start the gtk dispatcher!")
     val exampleTray = ExampleTray()
     // Check if garbage collection causes any issues
     gc()

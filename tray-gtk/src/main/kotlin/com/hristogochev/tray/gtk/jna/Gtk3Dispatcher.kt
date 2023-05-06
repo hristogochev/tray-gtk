@@ -23,7 +23,7 @@ internal object Gtk3Dispatcher {
     private var running: Boolean = false
 
     @Synchronized
-    fun start() :Boolean{
+    fun start(): Boolean {
         if (running) return true
         running = true
 
@@ -55,12 +55,14 @@ internal object Gtk3Dispatcher {
         return try {
             if (!startupLatch.await(10, TimeUnit.SECONDS)) {
                 System.err.println("Error: Waited for startup took longer than expected")
+                running = false
                 false
             } else {
                 true
             }
         } catch (e: InterruptedException) {
             e.printStackTrace()
+            running = false
             false
         }
     }
