@@ -13,7 +13,7 @@ maven { url = URI("https://jitpack.io") }
 And then add the following dependency to your build.gradle.kts file:
 
 ```kotlin
-implementation("com.github.hristogochev:tray-gtk:0.1.0")
+implementation("com.github.hristogochev:tray-gtk:0.2.0")
 ```
 
 Or if you want to use the most up to date commit version:
