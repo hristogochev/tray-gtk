@@ -16,12 +16,6 @@ And then add the following dependency to your build.gradle.kts file:
 implementation("com.github.hristogochev:tray-gtk:0.2.0")
 ```
 
-Or if you want to use the most up to date commit version:
-
-```kotlin
-implementation("com.github.hristogochev:tray-gtk:master-SNAPSHOT")
-```
-
 ### Example
 
 ![Preview](./preview.png)
