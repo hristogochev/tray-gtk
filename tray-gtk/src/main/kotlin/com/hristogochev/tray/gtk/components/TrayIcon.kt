@@ -5,8 +5,6 @@ import com.hristogochev.tray.gtk.jna.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
 import com.hristogochev.tray.gtk.jna.structs.GEventCallback
 import com.hristogochev.tray.gtk.jna.structs.GdkEventButton
-import com.hristogochev.tray.gtk.loadGtk
-import com.hristogochev.tray.gtk.startGtkDispatcher
 import com.hristogochev.tray.gtk.util.toPixBufPointer
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
@@ -51,8 +49,6 @@ class TrayIcon {
     var menu: Menu? = null
 
     init {
-        if (!loadGtk()) throw Exception("Unable to load a core gtk library!")
-        if (!startGtkDispatcher()) throw Exception("Unable to start the gtk dispatcher!")
         Gtk3Dispatcher.dispatch {
             val pointer = Gtk3.gtk_status_icon_new()
             this.pointer = pointer
