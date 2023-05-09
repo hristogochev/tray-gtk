@@ -72,6 +72,7 @@ trayIcon(
 
 ### Notes
 
+* Requires GTK 3.24.37 to be installed on the OS of the user.
 * Keeps an internal reference to all created tray icons in order to avoid garbage collection of GTK structs.
 
 ### Building with ProGuard
