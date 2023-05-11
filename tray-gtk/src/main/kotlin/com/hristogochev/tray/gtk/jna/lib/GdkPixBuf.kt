@@ -1,7 +1,9 @@
 @file:Suppress("LocalVariableName", "SpellCheckingInspection")
 
-package com.hristogochev.tray.gtk.jna
+package com.hristogochev.tray.gtk.jna.lib
 
+import com.hristogochev.tray.gtk.jna.JNA
+import com.hristogochev.tray.gtk.jna.gdkPixBufLibName
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
 

@@ -13,7 +13,7 @@ maven { url = URI("https://jitpack.io") }
 And then add the following dependency to your build.gradle.kts file:
 
 ```kotlin
-implementation("com.github.hristogochev:tray-gtk:0.2.1")
+implementation("com.github.hristogochev:tray-gtk:0.2.2")
 ```
 
 ### Example
@@ -81,6 +81,8 @@ When building with ProGuard make sure to add these to your proguard-rules.pro fi
 ```
 -keep class com.sun.jna.** { *; }
 -keep class * implements com.sun.jna.** { *; }
+-keep class com.hristogochev.tray.gtk.jna.lib.** { *; }
+-keepattributes *Annotation*
 ```
 
 ### License

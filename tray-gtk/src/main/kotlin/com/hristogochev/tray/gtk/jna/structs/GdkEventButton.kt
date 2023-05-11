@@ -5,6 +5,20 @@ package com.hristogochev.tray.gtk.jna.structs
 import com.sun.jna.Pointer
 import com.sun.jna.Structure
 
+@Structure.FieldOrder(
+    "type",
+    "window",
+    "send_event",
+    "time",
+    "x",
+    "y",
+    "axes",
+    "state",
+    "button",
+    "device",
+    "x_root",
+    "y_root"
+)
 internal class GdkEventButton : Structure() {
     @JvmField
     var type = 0
@@ -41,20 +55,4 @@ internal class GdkEventButton : Structure() {
 
     @JvmField
     var y_root = 0.0
-    override fun getFieldOrder(): List<String> {
-        return mutableListOf(
-            "type",
-            "window",
-            "send_event",
-            "time",
-            "x",
-            "y",
-            "axes",
-            "state",
-            "button",
-            "device",
-            "x_root",
-            "y_root"
-        )
-    }
 }

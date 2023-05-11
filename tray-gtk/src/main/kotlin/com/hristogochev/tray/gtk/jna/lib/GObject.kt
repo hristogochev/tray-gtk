@@ -1,7 +1,9 @@
 @file:Suppress("FunctionName", "LocalVariableName")
 
-package com.hristogochev.tray.gtk.jna
+package com.hristogochev.tray.gtk.jna.lib
 
+import com.hristogochev.tray.gtk.jna.JNA
+import com.hristogochev.tray.gtk.jna.gobjectLibName
 import com.sun.jna.Callback
 import com.sun.jna.Pointer
 

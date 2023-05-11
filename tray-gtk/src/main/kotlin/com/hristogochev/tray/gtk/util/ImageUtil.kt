@@ -1,6 +1,6 @@
 package com.hristogochev.tray.gtk.util
 
-import com.hristogochev.tray.gtk.jna.GdkPixBuf
+import com.hristogochev.tray.gtk.jna.lib.GdkPixBuf
 import com.sun.jna.Memory
 import com.sun.jna.Pointer
 import java.awt.image.BufferedImage

@@ -1,7 +1,7 @@
 package com.hristogochev.tray.gtk.components
 
-import com.hristogochev.tray.gtk.jna.GObject
-import com.hristogochev.tray.gtk.jna.Gtk3
+import com.hristogochev.tray.gtk.jna.lib.GObject
+import com.hristogochev.tray.gtk.jna.lib.Gtk3
 import com.hristogochev.tray.gtk.jna.Gtk3Dispatcher
 import com.hristogochev.tray.gtk.util.toPixBufPointer
 import com.sun.jna.Memory

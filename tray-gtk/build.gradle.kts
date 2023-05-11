@@ -26,7 +26,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.hristogochev"
             artifactId = "tray-gtk"
-            version = "0.2.1"
+            version = "0.2.2"
 
             from(components["java"])
             artifact(sourcesJar) {

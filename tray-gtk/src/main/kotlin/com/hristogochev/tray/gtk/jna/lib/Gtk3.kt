@@ -1,7 +1,9 @@
 @file:Suppress("FunctionName", "LocalVariableName")
 
-package com.hristogochev.tray.gtk.jna
+package com.hristogochev.tray.gtk.jna.lib
 
+import com.hristogochev.tray.gtk.jna.JNA
+import com.hristogochev.tray.gtk.jna.gtk3LibName
 import com.hristogochev.tray.gtk.jna.structs.FuncCallback
 import com.hristogochev.tray.gtk.jna.structs.GMainContext
 import com.hristogochev.tray.gtk.jna.structs.GMainLoop

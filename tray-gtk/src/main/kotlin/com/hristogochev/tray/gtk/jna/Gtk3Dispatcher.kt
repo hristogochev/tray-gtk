@@ -1,5 +1,7 @@
 package com.hristogochev.tray.gtk.jna
 
+import com.hristogochev.tray.gtk.jna.lib.Glib
+import com.hristogochev.tray.gtk.jna.lib.Gtk3
 import com.hristogochev.tray.gtk.jna.structs.FuncCallback
 import com.hristogochev.tray.gtk.jna.structs.GMainContext
 import com.hristogochev.tray.gtk.jna.structs.GMainLoop
