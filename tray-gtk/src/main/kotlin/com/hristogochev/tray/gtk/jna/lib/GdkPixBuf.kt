@@ -1,4 +1,4 @@
-@file:Suppress("LocalVariableName", "SpellCheckingInspection")
+@file:Suppress("FunctionName","LocalVariableName", "SpellCheckingInspection","unused")
 
 package com.hristogochev.tray.gtk.jna.lib
 

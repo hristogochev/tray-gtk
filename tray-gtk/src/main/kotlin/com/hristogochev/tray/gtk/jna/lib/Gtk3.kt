@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName", "LocalVariableName")
+@file:Suppress("FunctionName", "LocalVariableName","unused")
 
 package com.hristogochev.tray.gtk.jna.lib
 
@@ -45,8 +45,6 @@ internal object Gtk3 {
     external fun gtk_status_icon_set_visible(widget: Pointer?, visible: Boolean)
     external fun gtk_status_icon_set_tooltip_text(widget: Pointer?, tooltipText: String?)
     external fun gtk_status_icon_set_title(widget: Pointer?, titleText: String?)
-
-    @Suppress("unused")
     external fun gtk_status_icon_set_name(widget: Pointer?, name: String?)
     external fun gtk_menu_popup(
         menu: Pointer?,

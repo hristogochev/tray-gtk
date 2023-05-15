@@ -1,4 +1,4 @@
-@file:Suppress("FunctionName", "LocalVariableName")
+@file:Suppress("FunctionName", "LocalVariableName", "unused")
 
 package com.hristogochev.tray.gtk.jna.lib
 
